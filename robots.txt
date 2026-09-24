@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arinb123.github.io/disSECted/sitemap.xml
