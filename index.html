@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>disSECted | AI and SEC Comment Letters</title>
+  <meta name="description" content="An example-driven analysis of how the SEC questions corporate AI disclosures, with comment letters, regulatory context, and an LLM-assisted study.">
+  <meta name="author" content="Arin Barde">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://arinb123.github.io/disSECted/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="disSECted: AI and SEC Comment Letters">
+  <meta property="og:description" content="How the SEC probes corporate claims about artificial intelligence.">
+  <meta property="og:url" content="https://arinb123.github.io/disSECted/">
+  <meta name="theme-color" content="#081a2a">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="disSECted home"><span>dis</span>SEC<span>ted</span></a>
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav id="site-nav" aria-label="Main navigation">
+      <a href="#analysis">Analysis</a>
+      <a href="#llm">LLM study</a>
+      <a href="#code">Code & data</a>
+      <a href="#landscape">Landscape</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow">AI disclosure, without the fog</p>
+      <h1>How does the SEC respond when companies say “AI”?</h1>
+      <p class="dek">An example-driven analysis of contemporary comment letters, regulatory pressure, and what happens when an LLM tries to do the same work.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#analysis">Skip to the analysis</a>
+        <a class="button secondary" href="#introduction">Start from the beginning</a>
+      </div>
+      <dl class="hero-stats">
+        <div><dt>50+</dt><dd>comment letters read</dd></div>
+        <div><dt>8</dt><dd>sections</dd></div>
+        <div><dt>2026</dt><dd>published</dd></div>
+      </dl>
+    </section>
+
+    <section class="toc" aria-labelledby="contents-heading">
+      <div>
+        <p class="eyebrow">Navigation</p>
+        <h2 id="contents-heading">The whole project</h2>
+        <p>Want the no-fluff version? Read the manual comment-letter analysis. Everything else supplies context, methods, and supporting material.</p>
+      </div>
+      <ol>
+        <li><a href="#introduction"><span>01</span>Introduction</a></li>
+        <li><a href="#context"><span>02</span>Project context & limitations</a></li>
+        <li><a href="#analysis"><span>03</span>Comment letters: manual analysis</a></li>
+        <li><a href="#llm"><span>04</span>LLM-powered analysis</a></li>
+        <li><a href="#code"><span>05</span>Model implementation & code</a></li>
+        <li><a href="#extra"><span>06</span>Extra comment letters</a></li>
+        <li><a href="#landscape"><span>07</span>Broader regulatory landscape</a></li>
+        <li><a href="#future"><span>08</span>Future directions</a></li>
+      </ol>
+    </section>
+
+    <article id="introduction" class="chapter">
+      <header class="chapter-header"><span>01</span><div><p class="eyebrow">Introduction</p><h2>Shock! Shock! Another project about AI.</h2></div></header>
+      <p class="lead">Unfortunately, I have succumbed to the belletrist-hermeneutic plague affecting the <em>Financial Times</em> and <em>Wall Street Journal</em> alike.</p>
+      <p>In recompense, this project aims to be mainly practical and expository. In true Knuth fashion, my goals are:</p>
+      <ul class="check-list"><li>Transparency and understanding</li><li>Derivations from first principles</li><li>Needling regulatory agencies</li></ul>
+      <h3>Overview</h3>
+      <p>I explore how the regulatory landscape surrounding artificial intelligence is shifting. The Securities and Exchange Commission regularly publishes filings regarding AI disclosure guidelines. Through comment letters, press releases, PX14A6Gs, aggregate third-party analyses, and more, I compiled:</p>
+      <ul><li>My qualitative analysis of industry trends</li><li>An LLM’s qualitative analysis of industry trends</li><li>A model trained to respond to comment letters, compared qualitatively with human responses</li><li>A compact database of filings with highlighted examples</li></ul>
+      <p>And, hopefully, a more navigable interface than EDGAR.</p>
+    </article>
+
+    <article id="context" class="chapter">
+      <header class="chapter-header"><span>02</span><div><p class="eyebrow">Project context</p><h2>Why this project exists</h2></div></header>
+      <h3>Motivation</h3>
+      <p>The term “noocene” has been in circulation recently: an era characterized by intelligence. Related analyses reminded me of John Green’s <em>The Anthropocene Reviewed</em>, a witty commentary on the human-centric era. In the noocene, there are thousands of pretenders attempting to replicate his charm. To me, these analyses have always felt either too philosophical, with stubborn or lofty reflections on what it means to be human, or too calculated, with numbers, politics, or corporocratic pieces trying to prove a point.</p>
+      <p>I’ve also been interested in polarized opinions about the legal profession after AI. From CS classmates, I’ve heard that document review and drafting make law especially vulnerable. I’ve also heard that, unlike a product-focused field such as CS, process-, intuition-, and strategy-oriented fields like law might stick around longest.</p>
+      <p>At the end of the day, that is irrelevant. I don’t know what will happen, and anyone who says they do is ignorant or gambling. So I focused on what is happening today.</p>
+      <p>Anyone who wants to be someone today is talking about AI. It is the easiest way to get a mediocre startup into Y Combinator, survive as a public-facing company, or seem like a well-rounded scholar. Naturally, there is a reflexive pushback from prudent policymakers, cautious industrialists, and luddites. Among them is the Securities and Exchange Commission: the coolest federal agency, if you think regulatory compliance is cool.</p>
+      <p>As the regulatory landscape shifts while exponentially more LLM slop is taken as fact, my goal is to provide an example-based analysis of AI pushback in the legal world without becoming too philosophical, calculated, or speculative. Regulatory law is changing, and I hope to observe it through a window not made of frosted glass.</p>
+      <h3>Limitations</h3>
+      <ol class="numbered-cards">
+        <li><strong>The sample is curated.</strong> EDGAR is messy and poorly documented. I cannot read everything, so the sample may be unrepresentative.</li>
+        <li><strong>The subject moves quickly.</strong> Recency bias and publication lag operate together; in two years, the scene may look entirely different.</li>
+        <li><strong>The computational sample is imperfect.</strong> There are few Fortune 1000 letters that mention AI, and LLM output is nondeterministic.</li>
+        <li><strong>Time was scarce.</strong> The research and writing were completed in under two weeks. I am not a lawyer, so uptake was steep.</li>
+      </ol>
+      <p>This is not meant as a rigorous study. Take it as a documented journey. The whole may be irrelevant; some component, example, or approach may not be.</p>
+    </article>
+
+    <article id="analysis" class="chapter featured">
+      <header class="chapter-header"><span>03</span><div><p class="eyebrow">Manual analysis</p><h2>What the comment letters actually show</h2></div></header>
+      <p>There are more analyses of the regulatory landscape than filings themselves. For a general overview, see Orrick’s <a href="https://www.orrick.com/en/Insights/2024/12/SEC-Comment-Letter-Trend-AI-Related-Disclosures">SEC Comment Letter Trend: AI-Related Disclosures</a>. For the SEC’s own guidance, see <a href="https://www.sec.gov/files/approved-artificial-intelligence-disclosure-recommendation-120425.pdf">Disclosure of Artificial Intelligence’s Impact on Operations</a>. My goal is to tie analysis to examples and present procedural changes to a non-legal audience.</p>
+      <p>Over several weeks, I read more than 50 comment letters, contextualized with dozens of other filings, to understand the world of regulatory repartee.</p>
+
+      <h3>Some things never change</h3>
+      <p>People are fickle; bureaucracy is not. Although LLMs seem like the great upset, SEC comment letters maintain much of their unique charm.</p>
+      <details open><summary><strong>Materiality</strong><span>Reporting hinges on whether a practice matters.</span></summary>
+        <p>With AI, reporting would generally be expected if a corporation used a model to inform business decisions or trained it on user data. It likely would not be expected if AI merely drafted an email about a team meeting.</p>
+        <p>A recent public comment proposed ten “GAIP” principles: regularity, consistency, sincerity, permanence of methods, non-compensation, prudence, continuity, periodicity, materiality, and utmost good faith.</p>
+        <p>Companies might seem safest over-disclosing. Microsoft has often done so successfully, though even it receives scrutiny:</p>
+        <blockquote>“Microsoft has identified the threat actor as Midnight Blizzard, the Russian state-sponsored actor also known as Nobelium.” <cite>January 2024</cite></blockquote>
+        <blockquote>“Please advise us as to why you determined to file under Item 1.05 of Form 8-K given the statement that the incident had not had a material impact on your operations.” <cite>March 2024</cite></blockquote>
+        <p>AI companies receive plenty of letters. Altair Engineering’s response to a security-breach disclosure, for example, explicitly quantified monetary damages.</p>
+      </details>
+      <details><summary><strong>Quantification</strong><span>“Leverage” and “materially improve” invite requests for numbers.</span></summary>
+        <p>The SEC asked Dayforce, then Ceridian Holdings:</p>
+        <blockquote>“We note that you intend to ‘tak[e] advantage of modern technologies including artificial intelligence and blockchain’ for your Dayforce platform. Please explain the nature and purpose of blockchain in the context of your business, and discuss any significant challenges and risks with regard to its implementation and accessibility.” <cite>March 2018</cite></blockquote>
+        <p>Sometimes it is easier to roll over. Dayforce amended the filing by removing “blockchain” from its list of technologies.</p>
+      </details>
+      <details><summary><strong>Normativity</strong><span>Companies leave claims vague to avoid provable contradiction.</span></summary>
+        <p>Orrick notes SEC questions asking companies to clarify whose belief a claim reflects. Statistics are often blurred for the same effect. Oddity Tech, a data-and-AI wellness company, received this comment:</p>
+        <blockquote>“We note your presentation of non-GAAP measures includes adjustments to remove one-time bonuses, founder’s incentive plan and new brand launch related costs. Please clarify for us the nature of these costs and tell us how you considered the guidance in Question 100.01 of the Non-GAAP Financial Measures Compliance and Disclosure Interpretation.” <cite>May 2023</cite></blockquote>
+        <p>The same exchange produced a blunter request:</p>
+        <blockquote>“Please revise this disclosure to clarify whether you anticipate obtaining FDA approval for the products developed through ODDITY LABS. If not, please remove your references to ‘Pharma-Grade . . . Molecule Discovery’ and explain what is meant by ‘science-backed product development.’” <cite>May 2023</cite></blockquote>
+      </details>
+
+      <h3>The SEC does not know what it is doing</h3>
+      <p>Not maliciously. The staff are apostles of transparency, and thus probe everything. That sometimes produces nonsensical, contradictory, or unpredictable questions.</p>
+      <div class="case-grid">
+        <section class="case"><p class="case-label">Example 1</p><h4>Welltower Holdings</h4><p>Welltower has collected data on more than 2,000 properties and built statistical models since 2016. By 2023, it was integrating generative AI. The SEC asked for a fuller discussion of its data-science platform and AI efforts.</p><blockquote>“Please tell us, and revise future filings, to discuss your data science platform and the status of any AI-integration efforts.” <cite>April 2025</cite></blockquote><p>Welltower described its models, scale, underwriting process, valuation work, and internal AI tools. No further questions.</p></section>
+        <section class="case"><p class="case-label">Example 2</p><h4>Masterworks Advisers</h4><p>Masterworks uses machine learning to value art. The SEC asked whether its “machine learning categorization” used artificial intelligence.</p><blockquote>“The machine learning categorization tool … does leverage artificial intelligence, as machine learning is a subdivision of artificial intelligence.”</blockquote><p>Nothing enterprise-ending, but a student plucked from a CS 101 lecture could have provided the same answer.</p></section>
+      </div>
+      <aside class="takeaway"><p class="eyebrow">Quick takeaway</p><p>Any mention of AI, ML, or computational analysis risks an SEC probe into the specifics. The goal is not to sanction all technologists; it is to cut through hype by forcing corporations to justify their disclosure choices.</p></aside>
+    </article>
+
+    <article id="llm" class="chapter">
+      <header class="chapter-header"><span>04</span><div><p class="eyebrow">LLM-powered analysis</p><h2>Sonnet 4.6 tries both jobs</h2></div></header>
+      <h3>1. Chatbots for preliminary research</h3>
+      <p>My first attempt to gather context was to ask an LLM. Ordinarily, none of that would make the final writeup: hallucination is expected, and the model is supposed to suggest where to start. The results were so egregiously wrong that they became worth documenting.</p>
+      <ul><li>Claude, Copilot, and Gemini each claimed the SEC had released a sample warning letter aimed at FAANG+ companies. No such letter exists.</li><li>Gemini confidently claimed Meta’s May 2025 PX14A6G Proposal 11 concerned an independent board chair. The proposal concerns AI governance; “board” appears twice, once in “switchboard.”</li><li>Every major model generated fabricated links to letters. When challenged, each apologized and supplied more “real, verified” fabrications.</li></ul>
+      <p>From invented letters to invented content and interpretations, preliminary LLM research was a throwaway: funny, frustrating, and reassuring at once. Call it dialectic.</p>
+
+      <h3>2. Sonnet 4.6 tries my job</h3>
+      <p>I built a workflow for scraping, stratifying, extracting, and synthesizing comment letters. Scraping EDGAR caused repeated errors. Sampling suggestions were often ridiculous, including categories such as “most recent,” “recent IPO,” “big company,” “longest,” and “simple random.” After stronger prompts and substantial manual direction, however, the final summary was insightful.</p>
+      <details><summary><strong>Read the full LLM analysis</strong><span>The model’s synthesis of the sampled letters</span></summary>
+        <h4>Most frequently raised regulatory concerns</h4>
+        <h5>1. Definitional clarity and plain-English explanations</h5><p>The SEC repeatedly asks companies to define AI and machine learning, explain how they use them, and distinguish them from conventional algorithmic automation. Ingram Micro, Rubrik, Miso Robotics, SmartTrust, Airship AI, Firefly Neuroscience, Rad Technologies, and Arrive AI all received versions of this request.</p>
+        <h5>2. Third-party products and licensing</h5><p>Staff asks whether capabilities are internally developed, open-source, or licensed. The question matters because investors should understand vendor dependence, licensing constraints, and whether claimed differentiation is genuine.</p>
+        <h5>3. Data sources</h5><p>Letters ask what data companies use, whether it is proprietary or public, and what costs, limits, privacy concerns, and risks accompany it.</p>
+        <h5>4. How models operate</h5><p>High-level characterizations are insufficient. Staff asks how models structure inputs, what outputs they create, and what specific functions they perform.</p>
+        <h5>5. Jurisdictional risk</h5><p>International companies face different rules across the United States, European Union, United Kingdom, China, and elsewhere. The SEC increasingly connects AI operations to jurisdiction-specific risk disclosure.</p>
+        <h5>6. Technology-category claims</h5><p>Across AI, crypto, and blockchain, the SEC resists high-valuation labels unsupported by operational substance.</p>
+        <h4>How companies respond</h4>
+        <p>The standard response acknowledges the comment and revises the filing. Stronger responses explain operational details, define terms through sources such as the NIST framework, and disclose systems, data, vendors, and geographic reach. Weaker responses produce multiple rounds of increasingly specific comments.</p>
+        <h4>Most contested issues</h4>
+        <p>The hardest questions concern whether “proprietary” AI is internally developed; where machine learning ends and ordinary automation begins; and whether capabilities are operational or merely aspirational.</p>
+        <h4>How staff frames questions</h4>
+        <p>Staff escalates specificity across rounds, uses “if true, please revise to state” when it suspects misleading disclosure, cross-references inconsistencies across filings, and connects capability claims to risk-factor adequacy.</p>
+        <h4>Broader implication</h4>
+        <p>The model concluded that the SEC was developing a consistent framework and that substantive engagement resolved comments faster. Those claims sounded plausible but were not supported by a context window large enough to prove them.</p>
+      </details>
+      <p>The summary captured nearly everything I did. Its flaw was rhetorical: the model forced the letters into clean patterns, treated boilerplate as brilliant countermoves, and drifted toward unsupported claims about SEC consistency. Still, with more time, money, and better retrieval, the automated approach looks promising.</p>
+
+      <h3>3. Sonnet 4.6 tries your job</h3>
+      <p>I also asked the model to respond to a Welltower comment letter. The general themes were right, but the draft was vague, obsessed with principles over substance, and promised future revisions where real responses usually revise first. Without company knowledge, it had no useful numbers, policies, or certainty.</p>
+      <details><summary><strong>LLM response versus the real response</strong><span>Welltower, May 2025</span></summary>
+        <div class="comparison">
+          <section><p class="case-label">LLM prediction</p><p>The draft described a proprietary data platform aggregating operational, financial, and market data; said AI was being integrated into research, reporting, and synthesis; promised fuller future disclosure; and listed generic risks involving reliability, cybersecurity, privacy, and regulation.</p></section>
+          <section><p class="case-label">Actual response</p><p>Welltower supplied the missing substance: more than 2,000 properties across the US, UK, and Canada; a team led by doctorate-level statisticians and mathematicians; models built since 2016; underwriting reports for virtually every prospective senior-housing investment; a Chief Data Officer appointed in 2023; contract analysis; and internal chatbots using proprietary data through third-party APIs.</p></section>
+        </div>
+      </details>
+      <h3>4. Overall conclusion</h3>
+      <p>Fifty-fifty. With no context, terrible. With background and a general task, surprisingly useful. In company-specific work, bad again. The principle is familiar; the useful result is locating exactly where the litmus test breaks and where humans still need to step in.</p>
+    </article>
+
+    <article id="code" class="chapter">
+      <header class="chapter-header"><span>05</span><div><p class="eyebrow">Implementation</p><h2>Code and data</h2></div></header>
+      <h3>Notebook</h3><p>Most of the notebook was written by Claude because I wanted to see how little human input the process could tolerate. It is messy, unoptimized, and occasionally strange, but it is a useful starting point.</p>
+      <p><a class="text-link" href="https://colab.research.google.com/drive/1QUVxJJVuKc0LNklN7h5aykWYAJQ8_KCK?usp=sharing">Open the Colab notebook ↗</a></p>
+      <h3>Database</h3><p>The scraped letters may be useful even though they are not sufficient to rerun the entire notebook.</p>
+      <div class="download-grid">
+        <a href="data/sample.parquet" download><strong>sample.parquet</strong><span>Final filtered sample with letter bodies</span></a>
+        <a href="data/df_raw.parquet" download><strong>df_raw.parquet</strong><span>Crude metadata scrape</span></a>
+        <a href="data/df_paired.parquet" download><strong>df_paired.parquet</strong><span>Filtered CORRESP/UPLOAD pairs</span></a>
+      </div>
+      <p class="fine-print">Some files contain SGML or HTML debris and may need cleaning.</p>
+    </article>
+
+    <article id="extra" class="chapter">
+      <header class="chapter-header"><span>06</span><div><p class="eyebrow">More examples</p><h2>Extra comment letters</h2></div></header>
+      <p>A few exchanges were worth including even though they did not fit an overarching theme.</p>
+      <h3>Apple</h3><p>Apple asked to avoid producing an overarching AI report:</p>
+      <blockquote>“Artificial intelligence and machine learning are fundamental technologies that are integral to virtually every one of its products… the Proposal is excludable under Rule 14a-8(i)(7) because it seeks to micromanage the Company.” <cite>October 2023</cite></blockquote>
+      <p>The SEC’s answer:</p><blockquote>“We are unable to concur in your view.” <cite>January 2024</cite></blockquote>
+      <h3>Avidbank</h3><p>Avidbank said it intended to use AI to automate routine tasks and improve employee efficiency. The SEC asked for concrete plans, timing, and completed steps. Avidbank revised its disclosure to identify AI-assisted fraud detection, document drafting, communications, and internet search.</p>
+      <h3>Opti-Harvest</h3><p>The SEC encountered an especially ambitious piece of terminology:</p>
+      <blockquote>“Please clarify whether you are referring to Artificial Intelligence or Agricultural Intelligence, and if you mean Artificial Intelligence or both, please provide more detailed information as to how your platform and products use Artificial Intelligence.”</blockquote>
+    </article>
+
+    <article id="landscape" class="chapter">
+      <header class="chapter-header"><span>07</span><div><p class="eyebrow">Beyond comment letters</p><h2>The broader regulatory landscape</h2></div></header>
+      <h3>PX14A6Gs</h3><p>Notices of exempt solicitation appeared disproportionately in AI searches. These shareholder statements reveal disputes that ordinary company disclosures can obscure. See recent filings involving <a href="https://www.sec.gov/Archives/edgar/data/789019/000121465925016180/u1110251px14a6g.htm">Microsoft</a> and <a href="https://www.sec.gov/Archives/edgar/data/1326801/000109690625000701/nlpc_px14a6g.htm">Meta</a>.</p>
+      <h3>Agencies</h3>
+      <ul class="agency-list">
+        <li><strong>NIST</strong><span>Non-regulatory but directly relevant: foundational research, <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf">governance frameworks</a>, and evaluation.</span></li>
+        <li><strong>FTC</strong><span>Consumer-focused policy, anticompetitive-practice regulation, algorithmic fairness, and an internal <a href="https://www.ftc.gov/system/files/ftc_gov/pdf/FTC-AI-Use-Policy.pdf">AI use plan</a>.</span></li>
+        <li><strong>CFPB</strong><span>AI in lending and credit, especially relevant to financial institutions.</span></li>
+      </ul>
+      <p>China’s MIIT and the EU AI Office would make a useful comparison because their approaches to development and regulation differ sharply.</p>
+      <h3>Policy worth reading</h3>
+      <ul><li><a href="https://www.govinfo.gov/content/pkg/DCPD-202300949/pdf/DCPD-202300949.pdf">Executive Order 14110</a></li><li><a href="https://aiactinfo.eu/">EU AI Act</a></li><li>State initiatives in <a href="https://www.atg.wa.gov/aitaskforce">Washington</a>, <a href="https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB942">California</a>, and <a href="https://leg.colorado.gov/bills/sb24-205">Colorado</a></li></ul>
+    </article>
+
+    <article id="future" class="chapter">
+      <header class="chapter-header"><span>08</span><div><p class="eyebrow">Future directions</p><h2>Ideas exceed time</h2></div></header>
+      <p>Possible next steps include comparing MIIT and EU AI regulation, studying other filing types, and building a stronger system for predicting, classifying, and responding to SEC comment letters.</p>
+      <p>If you have suggestions, questions, or corrections, email <a href="mailto:asb385@cornell.edu">asb385@cornell.edu</a>. If you made it this far, I owe you the reply.</p>
+      <p class="closing">Thank you for reading.</p>
+    </article>
+
+    <section id="about" class="about">
+      <p class="eyebrow">Author</p>
+      <h2>Arin Barde</h2>
+      <p>Arin is a computer science and mathematics undergraduate at Cornell University. As part of the Milstein Program in Technology & Humanity, he is broadly interested in legal and political technology. This analysis began as his first-year project on the SEC’s interaction with AI.</p>
+    </section>
+  </main>
+
+  <footer><a class="brand" href="#top"><span>dis</span>SEC<span>ted</span></a><p>Research and writing by Arin Barde.</p><p><a href="https://github.com/arinb123/disSECted">Source on GitHub</a></p></footer>
+</body>
+</html>
