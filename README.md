@@ -1,3 +1,5 @@
+Ported from dissected.notion.site using Codex. Apologies for the ugly format.
+
 # disSECted
 
 An example-driven analysis of AI disclosure and SEC comment letters.
